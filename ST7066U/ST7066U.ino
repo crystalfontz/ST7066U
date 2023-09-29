@@ -2,7 +2,7 @@
 //
 //  CRYSTALFONTZ
 //
-//  This demo code is written for any character display that uses the Sitronix 
+//  This demo code is written for any character display that uses the Sitronix
 //  ST7066U display controller
 //    https://www.crystalfontz.com/controllers/Sitronix/ST7066U/
 //
@@ -60,8 +60,11 @@
 //-----------+-------+-------------+------------------------------------------+
 #include <Arduino.h>
 
-// set if the display has 4 rows (using the second enable pin)
-#define rows_4 1
+// set if the display is size 4004 (using the second enable pin)
+#define display_4004 1
+
+// set if the display has 4 rows (use for 1604, 2004 displays. does not need to be set for 4004 displays)
+#define rows_4 0
 
 //==============================================================================
 
@@ -71,7 +74,7 @@
 #define EN (10)
 #define datapins (PORTD)
 
-#if rows_4
+#if display_4004
 #define EN2 (11)
 #endif
 
@@ -90,7 +93,7 @@
 #define CLR_EN (PORTB &= ~(EN_MASK))
 #define SET_EN (PORTB |= (EN_MASK))
 
-#if rows_4
+#if display_4004
 #define EN2_MASK (0x08)
 #define CLR_EN2 (PORTB &= ~(EN2_MASK))
 #define SET_EN2 (PORTB |= (EN2_MASK))
@@ -113,6 +116,11 @@
 // line positions
 #define LINE1 (0x80)        // first line is 00h but bit 7 is high for this command
 #define LINE2 (0x80 + 0x40) // second line is 40h but bit 7 is high for this command
+
+#if rows_4
+#define LINE3 (0x80 + 0x14) // third line is 14h but bit 7 is high for this command
+#define LINE4 (0x80 + 0x54) // fourth line is 54h but bit 7 is high for this command
+#endif
 
 //==============================================================================
 
@@ -142,16 +150,16 @@ void checkBusy()
     DDRD = 0xFF; // change the pin directions to output
 }
 
-#if rows_4
+#if display_4004
 // duplicate of checkBusy() function for the second half of the display
-void checkBusy_4row()
+void checkBusy_4004()
 {
-    datapins = 0x80; 
-    DDRD = 0x00;     
+    datapins = 0x80;
+    DDRD = 0x00;
 
-    CLR_RS;  
-    SET_RW;  
-    SET_EN2; 
+    CLR_RS;
+    SET_RW;
+    SET_EN2;
 
     while (0x80 == (PIND & 0x80))
     {
@@ -161,10 +169,10 @@ void checkBusy_4row()
         SET_EN2;
     }
 
-    CLR_EN2; 
-    CLR_RW;  
+    CLR_EN2;
+    CLR_RW;
 
-    DDRD = 0xFF; 
+    DDRD = 0xFF;
 }
 #endif
 
@@ -196,30 +204,30 @@ void sendData(uint8_t data)
     CLR_EN; // deselect the LCD controller
 }
 
-#if rows_4
+#if display_4004
 // duplicate of sendCommand() and sendData() functions for second half of display
-void sendCommand_4row(uint8_t command)
+void sendCommand_4004(uint8_t command)
 {
-    checkBusy_4row(); 
-    CLR_RW;           
-    CLR_RS;            
+    checkBusy_4004();
+    CLR_RW;
+    CLR_RS;
 
-    datapins = command; 
+    datapins = command;
 
-    SET_EN2; 
-    CLR_EN2; 
+    SET_EN2;
+    CLR_EN2;
 }
 
-void sendData_4row(uint8_t data)
+void sendData_4004(uint8_t data)
 {
-    checkBusy_4row(); 
-    CLR_RW;           
-    SET_RS;           
+    checkBusy_4004();
+    CLR_RW;
+    SET_RS;
 
-    datapins = data; 
+    datapins = data;
 
-    SET_EN2; 
-    CLR_EN2; 
+    SET_EN2;
+    CLR_EN2;
 }
 #endif
 
@@ -240,15 +248,15 @@ void init_ST7066U()
     sendCommand(ST7066U_EMS(1, 0));
     // set cursor increment and display shift to the right
 
-#if rows_4
+#if display_4004
     // the same initialization is followed for the second half of the display
-    checkBusy_4row(); 
-    sendCommand_4row(ST7066U_FUNCSET(1, 1, 0));
-    sendCommand_4row(ST7066U_FUNCSET(1, 1, 0));
-    sendCommand_4row(ST7066U_DISPONOFF(1, 0, 0));
-    sendCommand_4row(ST7066U_CLRDISP);
-    sendCommand_4row(ST7066U_RETHOME);
-    sendCommand_4row(ST7066U_EMS(1, 0));
+    checkBusy_4004();
+    sendCommand_4004(ST7066U_FUNCSET(1, 1, 0));
+    sendCommand_4004(ST7066U_FUNCSET(1, 1, 0));
+    sendCommand_4004(ST7066U_DISPONOFF(1, 0, 0));
+    sendCommand_4004(ST7066U_CLRDISP);
+    sendCommand_4004(ST7066U_RETHOME);
+    sendCommand_4004(ST7066U_EMS(1, 0));
 #endif
 }
 
@@ -265,17 +273,17 @@ void writeString(char *myString)
     } while (myString[i] != NULL);
 } // transfer the string contents until i reaches the end of the content
 
-#if rows_4
+#if display_4004
 // duplicate of writeString() for second half of the display
-void writeString_4row(char *myString)
+void writeString_4004(char *myString)
 {
     uint8_t i = 0;
     do
     {
-        sendData_4row((uint8_t)myString[i]);
+        sendData_4004((uint8_t)myString[i]);
         i++;
     } while (myString[i] != NULL);
-} 
+}
 #endif
 
 //==============================================================================
@@ -283,7 +291,7 @@ void writeString_4row(char *myString)
 // setup function
 void setup()
 {
-#if rows_4
+#if display_4004
     // define pin directions
     DDRB = 0x0F; // set pins 8, 9, 10, and 11 as outputs
     DDRD = 0xFF; // set pins 0-7 as outputs
@@ -297,7 +305,7 @@ void setup()
     CLR_RW;
     CLR_EN;
 
-#if rows_4
+#if display_4004
     CLR_EN2;
 #endif
 
@@ -315,12 +323,19 @@ void loop()
     writeString("** Crystalfontz America, Incorporated **");
 
 #if rows_4
-    // the same line addresses apply for the second half of the display
-    sendCommand_4row(LINE1);
-    writeString_4row("*CFAH4004A1TMI 40 Characters x 4 Lines**");
-    sendCommand_4row(LINE2);
-    writeString_4row("****************************************");
+    sendCommand(LINE3); // write string to line 3
+    writeString("ABCDEFGHIJKLMNOPQRST");
+    sendCommand(LINE4); // write string to line 4
+    writeString("12345678901234567890");
 #endif
 
-    while (1);
+#if display_4004
+    // the same line addresses apply for the second half of the display
+    sendCommand_4004(LINE1);
+    writeString_4004("*CFAH4004A1TMI 40 Characters x 4 Lines**");
+    sendCommand_4004(LINE2);
+    writeString_4004("****************************************");
+#endif
+
+while (1);
 }
