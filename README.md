@@ -86,7 +86,7 @@ Here are links to our active displays that use the Sitronix ST7066U controller:\
 [CFAH1602Y-YYH-ET](https://www.crystalfontz.com/product/cfah1602yyyhet-16x2-display-module-text), 
 [CFAH1602Z-YYH-ET](https://www.crystalfontz.com/product/cfah1602zyyhet-16x2-lcd-character-display), 
 [CFAH1604A-NYG-JT](https://www.crystalfontz.com/product/cfah1604anygjt-lcd-display-alphanumeric-16x4), 
-[CFAH1604A-TMI-JT](https://www.crystalfontz.com/product/cfah1604atmijt-character-display-16x4), 
+[CFAH1604A1-TMI-JT](https://www.crystalfontz.com/product/cfah1604a1tmijt-character-display-16x4), 
 [CFAH1604A-YYH-JT](https://www.crystalfontz.com/product/cfah1604ayyhjt-character-display-16x4), 
 [CFAH1604B-NGH-ET](https://www.crystalfontz.com/product/cfah1604bnghet-character-lcd-16x4), 
 [CFAH1604B-TMI-ET](https://www.crystalfontz.com/product/cfah1604btmiet-lcd-16x4-character-display), 
