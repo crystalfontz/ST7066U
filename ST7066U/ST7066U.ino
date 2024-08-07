@@ -37,35 +37,54 @@
 // For more information, please refer to <http://unlicense.org/>
 //
 // Connection guide:
-// ARD       | Port  | Display pin |  Function: 8-bit parallel                |
-//-----------+-------+-------------+------------------------------------------+
-// 5V        |       | 5V          |  POWER 5V                                |
-// GND       |       | GND         |  GROUND                                  |
-//-----------+-------+-------------+------------------------------------------+
-// D8        | PORTB | RS/DI       |  Register Select                 (RS)    |
-// D9        | PORTB | R/W         |  Read/Write                      (RW)    |
-// D10       | PORTB | EN          |  Enable                          (EN)    |
-// D11       | PORTB | EN2         |  Enable (second half of display) (EN2)   |
-//-----------+-------+-------------+------------------------------------------+
-// Data Lines
-//-----------+-------+-------------+------------------------------------------+
-// D0        | PORTD |  DB0         |  DATA BUS LINE                   (DB0)  |
-// D1        | PORTD |  DB1         |  DATA BUS LINE                   (DB1)  |
-// D2        | PORTD |  DB2         |  DATA BUS LINE                   (DB2)  |
-// D3        | PORTD |  DB3         |  DATA BUS LINE                   (DB3)  |
-// D4        | PORTD |  DB4         |  DATA BUS LINE                   (DB4)  |
-// D5        | PORTD |  DB5         |  DATA BUS LINE                   (DB5)  |
-// D6        | PORTD |  DB6         |  DATA BUS LINE                   (DB6)  |
-// D7        | PORTD |  DB7         |  DATA BUS LINE                   (DB7)  |
-//-----------+-------+-------------+------------------------------------------+
+//---------+-------+--------------+------------------------------------------+
+// Arduino | Port  | Display pin* |  Function: 8-bit parallel                |
+//---------+-------+--------------+------------------------------------------+
+// Power                                                                     |
+//---------+-------+--------------+------------------------------------------+
+// 5V      |       | 5V           |  POWER 5V                                |
+// GND     |       | GND          |  GROUND                                  |
+//---------+-------+--------------+------------------------------------------+
+// Control Lines                                                             |
+//---------+-------+--------------+------------------------------------------+
+// D8      | PORTB | RS/DI        |  Register Select                    (RS) |
+// D9      | PORTB | R/W          |  Read/Write                         (RW) |
+// D10     | PORTB | EN           |  Enable                             (EN) |
+// D11     | PORTB | EN2          |  Enable (second half of display)   (EN2) |
+//---------+-------+--------------+------------------------------------------+
+// Data Lines                                                                |
+//---------+-------+--------------+------------------------------------------+
+// D0      | PORTD |  DB0         |  DATA BUS LINE                     (DB0) |
+// D1      | PORTD |  DB1         |  DATA BUS LINE                     (DB1) |
+// D2      | PORTD |  DB2         |  DATA BUS LINE                     (DB2) |
+// D3      | PORTD |  DB3         |  DATA BUS LINE                     (DB3) |
+// D4      | PORTD |  DB4         |  DATA BUS LINE                     (DB4) |
+// D5      | PORTD |  DB5         |  DATA BUS LINE                     (DB5) |
+// D6      | PORTD |  DB6         |  DATA BUS LINE                     (DB6) |
+// D7      | PORTD |  DB7         |  DATA BUS LINE                     (DB7) |
+//---------+-------+-------------+-------------------------------------------+
+
 #include <Arduino.h>
-
-// set if the display is size 4004 (using the second enable pin)
-#define display_4004 1
-
-// set if the display has 4 rows (use for 1604, 2004 displays. does not need to be set for 4004 displays)
-#define rows_4 0
-
+//==============================================================================
+// Uncomment the appropriate "chars" and "rows" for your display
+//==============================================================================
+//define the number of characters per line on the display
+//#define chars 08
+//#define chars 12
+//#define chars 16
+//#define chars 20
+//#define chars 24
+//#define chars 40
+//==============================================================================
+//define the number of rows on yours display
+//#define rows 1
+//#define rows 2
+//#define rows 4
+//==============================================================================
+#if chars == 40 && rows == 4
+    // set if the display is size 4004 (using the second enable pin)
+    #define display_4004 0
+#endif
 //==============================================================================
 
 // define pins on Arduino
@@ -117,7 +136,7 @@
 #define LINE1 (0x80)        // first line is 00h but bit 7 is high for this command
 #define LINE2 (0x80 + 0x40) // second line is 40h but bit 7 is high for this command
 
-#if rows_4
+#if rows == 4
 #define LINE3 (0x80 + 0x14) // third line is 14h but bit 7 is high for this command
 #define LINE4 (0x80 + 0x54) // fourth line is 54h but bit 7 is high for this command
 #endif
@@ -317,23 +336,74 @@ void setup()
 // loop function
 void loop()
 {
+// Write to the first row
+#if rows == 1
+    #if chars == 16
+    sendCommand(LINE1); // write string to line 1
+    writeString("*** CFAH1601 ***");
+    #elif chars = 20
+    sendCommand(LINE1); // write string to line 1
+    writeString("***** CFAH2001 *****");
+    #endif
+#elif rows == 2
+    #if chars == 8
+    sendCommand(LINE1); // write string to line 1
+    writeString("********");
+    sendCommand(LINE2); // write string to line 2
+    writeString("CFAH0802");
+    #elif chars == 12
+    sendCommand(LINE1); // write string to line 1
+    writeString("CRYSTALFONTZ");
+    sendCommand(LINE2); // write string to line 2
+    writeString("* CFAH1202 *");
+    #elif chars == 16
+    sendCommand(LINE1); // write string to line 1
+    writeString("* CRYSTALFONTZ *");
+    sendCommand(LINE2); // write string to line 2
+    writeString("*** CFAH1602 ***");
+    #elif chars == 20
+    sendCommand(LINE1); // write string to line 1
+    writeString("*** CRYSTALFONTZ ***");
+    sendCommand(LINE2); // write string to line 2
+    writeString("***** CFAH2002 *****");
+    #elif chars == 24
+    sendCommand(LINE1); // write string to line 1
+    writeString("* CRYSTALFONTZ AMERICA *");
+    sendCommand(LINE2); // write string to line 2
+    writeString("******* CFAH2402 *******");
+    #elif chars == 40
+    sendCommand(LINE1); // write string to line 1
+    writeString("** Crystalfontz America, Incorporated **");
+    sendCommand(LINE2); // write string to line 2
+    writeString("*** CFAH4002 40 Characters x 2 Lines ***");
+#elif rows == 4
+    #if chars == 16
+    sendCommand(LINE1); // write string to line 1
+    writeString("****************");
+    sendCommand(LINE2); // write string to line 2
+    writeString("* CRYSTALFONTZ *");
+    sendCommand(LINE3); // write string to line 3
+    writeString("*** CFAH1604 ***");
+    sendCommand(LINE4); // write string to line 4
+    writeString("****************");
+    #if chars == 20
+    sendCommand(LINE1); // write string to line 1
+    writeString("********************");
+    sendCommand(LINE2); // write string to line 2
+    writeString("*** CRYSTALFONTZ ***");
+    sendCommand(LINE3); // write string to line 3
+    writeString("***** CFAH2004 *****");
+    sendCommand(LINE4); // write string to line 4
+    writeString("********************");
+    #if chars == 40
     sendCommand(LINE1); // write string to line 1
     writeString("****************************************");
     sendCommand(LINE2); // write string to line 2
     writeString("** Crystalfontz America, Incorporated **");
-
-#if rows_4
-    sendCommand(LINE3); // write string to line 3
-    writeString("ABCDEFGHIJKLMNOPQRST");
-    sendCommand(LINE4); // write string to line 4
-    writeString("12345678901234567890");
-#endif
-
-#if display_4004
-    // the same line addresses apply for the second half of the display
-    sendCommand_4004(LINE1);
-    writeString_4004("*CFAH4004A1TMI 40 Characters x 4 Lines**");
-    sendCommand_4004(LINE2);
+    // the same line addresses apply for the bottom half of the display
+    sendCommand_4004(LINE1); // write string to line 3
+    writeString_4004("*** CFAH4004 40 Characters x 2 Lines ***");
+    sendCommand_4004(LINE2); // write string to line 4
     writeString_4004("****************************************");
 #endif
 
