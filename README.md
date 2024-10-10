@@ -5,36 +5,27 @@ This is Arduino sample code for any display that uses the Sitronix ST7066U contr
 These displays are part of the CFAH character family and operate at 5V. Please refer the display datasheet before connection to a power source. Further, a variable resistor connection is required for contrast adjustment and its connection scheme has been outlined in the datasheet of the respective part.
 
 ## Connection Guide
-```
-//---------+-------+--------------+------------------------------------------+
-// Arduino | Port  | Display pin* |  Function: 8-bit parallel                |
-//---------+-------+--------------+------------------------------------------+
-// Power                                                                     |
-//---------+-------+--------------+------------------------------------------+
-// 5V      |       | 5V           |  POWER 5V                                |
-// GND     |       | GND          |  GROUND                                  |
-//---------+-------+--------------+------------------------------------------+
-// Control Lines                                                             |
-//---------+-------+--------------+------------------------------------------+
-// D8      | PORTB | RS/DI        |  Register Select                   (RS)  |
-// D9      | PORTB | R/W          |  Read/Write                        (RW)  |
-// D10     | PORTB | EN           |  Enable                            (EN)  |
-// D11     | PORTB | EN2          |  Enable (second half of display)   (EN2) |
-//---------+-------+--------------+------------------------------------------+
-// Data Lines                                                                |
-//---------+-------+--------------+------------------------------------------+
-// D0      | PORTD |  DB0         |  DATA BUS LINE                     (DB0) |
-// D1      | PORTD |  DB1         |  DATA BUS LINE                     (DB1) |
-// D2      | PORTD |  DB2         |  DATA BUS LINE                     (DB2) |
-// D3      | PORTD |  DB3         |  DATA BUS LINE                     (DB3) |
-// D4      | PORTD |  DB4         |  DATA BUS LINE                     (DB4) |
-// D5      | PORTD |  DB5         |  DATA BUS LINE                     (DB5) |
-// D6      | PORTD |  DB6         |  DATA BUS LINE                     (DB6) |
-// D7      | PORTD |  DB7         |  DATA BUS LINE                     (DB7) |
-//---------+-------+--------------+------------------------------------------+
+| Arduino | Port  | Display pin* |  Function: 8-bit parallel                |
+| ------- | ----- | ------------ | ---------------------------------------- |
+| Power                                                                     |
+| 5V      |       | 5V           |  POWER 5V                                |
+| GND     |       | GND          |  GROUND                                  |
+| Control Lines                                                             |
+| D8      | PORTB | RS/DI        |  Register Select                    (RS) |
+| D9      | PORTB | R/W          |  Read/Write                         (RW) |
+| D10     | PORTB | EN           |  Enable                             (EN) |
+| D11     | PORTB | EN2          |  Enable (second half of display)   (EN2) |
+| Data Lines                                                                |
+| D0      | PORTD |  DB0         |  DATA BUS LINE                     (DB0) |
+| D1      | PORTD |  DB1         |  DATA BUS LINE                     (DB1) |
+| D2      | PORTD |  DB2         |  DATA BUS LINE                     (DB2) |
+| D3      | PORTD |  DB3         |  DATA BUS LINE                     (DB3) |
+| D4      | PORTD |  DB4         |  DATA BUS LINE                     (DB4) |
+| D5      | PORTD |  DB5         |  DATA BUS LINE                     (DB5) |
+| D6      | PORTD |  DB6         |  DATA BUS LINE                     (DB6) |
+| D7      | PORTD |  DB7         |  DATA BUS LINE                     (DB7) |
 
 * Actual pinout varies by display, consult the display's datasheet to confirm
-```
 
 ## Display Information
 Here are links to our active displays that use the Sitronix ST7066U controller:
