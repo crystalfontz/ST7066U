@@ -148,9 +148,9 @@ Here are links to our active displays that use the Sitronix ST7066U controller:
 - [CFAH4002A-YYH-JT](https://www.crystalfontz.com/product/cfah4002ayyhjt)
 
 ### 40 characters by 4 rows
-- [CFAH4004A-TFH-JT](https://www.crystalfontz.com/product/cfah4004atfhjt)
+- [CFAH4004A1-TFH-JT](https://www.crystalfontz.com/product/cfah4004a1tfhjt)
 - [CFAH4004A1-YYH-JT](https://www.crystalfontz.com/product/cfah4004a1yyhjt)
 - [CFAH4004A1-TMI-JT](https://www.crystalfontz.com/product/cfah4004a1tmijt)
 
 ## More information
-For more inforamtion about other character LCD display offerings, please see our full list [here](https://www.crystalfontz.com/c/character-lcd-displays/21).
+For more information about other character LCD display offerings, please see our full list [here](https://www.crystalfontz.com/c/character-lcd-displays/21).

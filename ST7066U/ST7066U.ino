@@ -1,6 +1,6 @@
 //==============================================================================
 //
-//  CRYSTALFONTZ
+//  Crystalfontz
 //
 //  This demo code is written for any character display that uses the Sitronix
 //  ST7066U display controller
@@ -43,10 +43,10 @@
 // | 5V      |       | 5V           |  POWER 5V                                |
 // | GND     |       | GND          |  GROUND                                  |
 // | Control Lines                                                             |
-// | D8      | PORTB | RS/DI        |  Register Select                    (RS) |
-// | D9      | PORTB | R/W          |  Read/Write                         (RW) |
-// | D10     | PORTB | EN           |  Enable                             (EN) |
-// | D11     | PORTB | EN2          |  Enable (second half of display)   (EN2) |
+// | B8      | PORTB | RS/DI        |  Register Select                    (RS) |
+// | B9      | PORTB | R/W          |  Read/Write                         (RW) |
+// | B10     | PORTB | EN           |  Enable                             (EN) |
+// | B11     | PORTB | EN2          |  Enable (second half of display)   (EN2) |
 // | Data Lines                                                                |
 // | D0      | PORTD |  DB0         |  DATA BUS LINE                     (DB0) |
 // | D1      | PORTD |  DB1         |  DATA BUS LINE                     (DB1) |
@@ -89,14 +89,7 @@
 //==============================================================================
 
 // define pins on Arduino
-#define RS (8)
-#define RW (9)
-#define EN (10)
 #define datapins (PORTD)
-
-#ifdef display_4004
-#define EN2 (11)
-#endif
 
 //==============================================================================
 
