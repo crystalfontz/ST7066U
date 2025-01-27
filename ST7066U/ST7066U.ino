@@ -37,25 +37,27 @@
 // For more information, please refer to <http://unlicense.org/>
 //
 // Connection guide:
-// | Arduino | Port  | Display pin* |  Function: 8-bit parallel                |
-// | ------- | ----- | ------------ | ---------------------------------------- |
-// | Power                                                                     |
-// | 5V      |       | 5V           |  POWER 5V                                |
-// | GND     |       | GND          |  GROUND                                  |
-// | Control Lines                                                             |
-// | B8      | PORTB | RS/DI        |  Register Select                    (RS) |
-// | B9      | PORTB | R/W          |  Read/Write                         (RW) |
-// | B10     | PORTB | EN           |  Enable                             (EN) |
-// | B11     | PORTB | EN2          |  Enable (second half of display)   (EN2) |
-// | Data Lines                                                                |
-// | D0      | PORTD |  DB0         |  DATA BUS LINE                     (DB0) |
-// | D1      | PORTD |  DB1         |  DATA BUS LINE                     (DB1) |
-// | D2      | PORTD |  DB2         |  DATA BUS LINE                     (DB2) |
-// | D3      | PORTD |  DB3         |  DATA BUS LINE                     (DB3) |
-// | D4      | PORTD |  DB4         |  DATA BUS LINE                     (DB4) |
-// | D5      | PORTD |  DB5         |  DATA BUS LINE                     (DB5) |
-// | D6      | PORTD |  DB6         |  DATA BUS LINE                     (DB6) |
-// | D7      | PORTD |  DB7         |  DATA BUS LINE                     (DB7) |
+// | Arduino  | Port  | Display pin* | Function: 8-bit parallel              |
+// | -------  | ----- | ------------ | ------------------------------------- |
+// | Power                                                                   |
+// | 5V       |       | 5V           | POWER 5V                              |
+// | GND      |       | GND          | GROUND                                |
+// | Control Lines                                                           |
+// | D8  (B0) | PORTB | RS/DI        | Register Select                  (RS) |
+// | D9  (B1) | PORTB | R/W          | Read/Write                       (RW) |
+// | D10 (B2) | PORTB | EN           | Enable                           (EN) |
+// | D11 (B3) | PORTB | EN2          | Enable (second half of display) (EN2) |
+// | Data Lines                                                              |
+// | D0       | PORTD | DB0          | DATA BUS LINE                   (DB0) |
+// | D1       | PORTD | DB1          | DATA BUS LINE                   (DB1) |
+// | D2       | PORTD | DB2          | DATA BUS LINE                   (DB2) |
+// | D3       | PORTD | DB3          | DATA BUS LINE                   (DB3) |
+// | D4       | PORTD | DB4          | DATA BUS LINE                   (DB4) |
+// | D5       | PORTD | DB5          | DATA BUS LINE                   (DB5) |
+// | D6       | PORTD | DB6          | DATA BUS LINE                   (DB6) |
+// | D7       | PORTD | DB7          | DATA BUS LINE                   (DB7) |
+
+// * Actual pinout varies by display, consult the display's datasheet to confirm
 
 #include <Arduino.h>
 //==============================================================================
