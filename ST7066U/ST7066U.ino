@@ -399,7 +399,7 @@ void loop()
         writeString("** Crystalfontz America, Incorporated **");
         // the same line addresses apply for the bottom half of the display
         sendCommand_4004(LINE1); // write string to line 3
-        writeString_4004("*** CFAH4004 40 Characters x 2 Lines ***");
+        writeString_4004("*** CFAH4004 40 Characters x 4 Lines ***");
         sendCommand_4004(LINE2); // write string to line 4
         writeString_4004("****************************************");
     #endif
